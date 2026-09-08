@@ -4,14 +4,13 @@ interface IntroScreenProps {
   onStart: () => void;
 }
 
-// TODO: 실제 사진이 정해지면 /public에 넣고 이 자리표시(placeholder)를
-// <img src="/intro-photo.jpg" alt="벗밭" className="h-full w-full object-cover" /> 로 교체하면 됨.
 export default function IntroScreen({ onStart }: IntroScreenProps) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-7 py-16 text-center">
-      <div className="mx-auto flex w-full max-w-[480px] flex-col items-center animate-rise">
-        <div className="mb-8 flex h-48 w-48 items-center justify-center rounded-full bg-accent-soft text-6xl">
-          🥗
+      <div className="mx-auto flex w-full max-w-[560px] flex-col items-center animate-rise">
+        <div className="mb-8 aspect-[3/2] w-full overflow-hidden rounded-2xl border border-line">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/intro-photo.jpg" alt="벗밭과 함께하는 식사 자리" className="h-full w-full object-cover" />
         </div>
 
         <h1 className="text-[clamp(24px,5vw,34px)] font-extrabold leading-[1.5] text-ink">
