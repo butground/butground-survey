@@ -15,7 +15,10 @@ export default function AdminPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/admin/submissions', { headers: { 'x-admin-key': passcode } });
+      const res = await fetch('/api/admin/submissions', {
+        headers: { 'x-admin-key': passcode },
+        cache: 'no-store',
+      });
       if (!res.ok) {
         setError('비밀번호가 틀렸어요.');
         return;
@@ -34,7 +37,10 @@ export default function AdminPage() {
     if (!authedKey) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/submissions', { headers: { 'x-admin-key': authedKey } });
+      const res = await fetch('/api/admin/submissions', {
+        headers: { 'x-admin-key': authedKey },
+        cache: 'no-store',
+      });
       const json = await res.json();
       setSubmissions(json.submissions || []);
     } finally {
@@ -44,7 +50,10 @@ export default function AdminPage() {
 
   async function download(format: 'csv' | 'xlsx') {
     if (!authedKey) return;
-    const res = await fetch(`/api/admin/export?format=${format}`, { headers: { 'x-admin-key': authedKey } });
+    const res = await fetch(`/api/admin/export?format=${format}`, {
+      headers: { 'x-admin-key': authedKey },
+      cache: 'no-store',
+    });
     if (!res.ok) {
       setError('다운로드에 실패했어요.');
       return;
