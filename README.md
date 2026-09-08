@@ -28,8 +28,9 @@ http://localhost:3000 에서 확인할 수 있습니다.
 | `GOOGLE_PRIVATE_KEY` | (service-account 모드) 서비스 계정 개인키 (`\n`으로 이스케이프) |
 | `GOOGLE_SHEET_ID` | (service-account 모드) 대상 스프레드시트 ID |
 
-환경변수를 설정하지 않아도 앱은 정상 동작합니다. 다만 설문 제출 데이터가 구글 시트에 저장되지 않고
-서버 로그에만 경고가 남습니다(사용자에게 노출되는 결과 화면에는 영향 없음).
+`GOOGLE_SHEETS_WEBHOOK_URL`을 별도로 설정하지 않으면 `lib/sheets.ts`에 넣어둔 기본 Apps Script
+웹앱 주소로 자동 전송됩니다. 다른 시트로 바꾸고 싶으면 Vercel 환경변수에
+`GOOGLE_SHEETS_WEBHOOK_URL`을 등록하면 그 값이 우선 사용됩니다.
 
 ### 방식 1: Apps Script 웹앱 (기본값)
 

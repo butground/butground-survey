@@ -49,12 +49,21 @@ function toRow(data: SubmitPayload): (string | number)[] {
 }
 
 /**
+ * ⚠️ 벗밭 실제 운영용 Apps Script 웹앱 기본 주소.
+ * Vercel에 GOOGLE_SHEETS_WEBHOOK_URL 환경변수를 별도로 등록하지 않아도 이 주소로 저장되도록
+ * 기본값(fallback)으로 넣어둔 것. 다른 시트로 바꾸고 싶으면 Vercel 환경변수에
+ * GOOGLE_SHEETS_WEBHOOK_URL을 등록하면 이 기본값 대신 그 값이 우선 사용됨.
+ */
+const DEFAULT_GOOGLE_SHEETS_WEBHOOK_URL =
+  'https://script.google.com/macros/s/AKfycbwAP47Fvd1dxhFuAGL8d-aiR8tTaNYGiRfQB4Ug3e5Y8GvJcyiw99AlF_zVmw-XvrvS/exec';
+
+/**
  * 방식 1(기본값): 기존 프로토타입과 동일하게 Apps Script 웹앱 URL로 그대로 프록시 전달.
  * Content-Type을 text/plain으로 보내야 Apps Script 웹앱에서 CORS preflight 없이 받을 수 있음
  * (Apps Script 웹앱은 커스텀 헤더의 OPTIONS preflight에 응답하지 않기 때문).
  */
 async function saveViaAppsScriptWebhook(data: SubmitPayload): Promise<void> {
-  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || DEFAULT_GOOGLE_SHEETS_WEBHOOK_URL;
   if (!webhookUrl) {
     console.warn('[벗밭 설문] GOOGLE_SHEETS_WEBHOOK_URL이 비어있어 구글 시트로 전송하지 않았어요.');
     return;
