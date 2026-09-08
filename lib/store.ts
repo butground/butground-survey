@@ -9,7 +9,7 @@ async function getClient() {
   const url = process.env.REDIS_URL;
   if (!url) return null;
   if (!client) {
-    const { Redis } = await import('ioredis');
+    const { default: Redis } = await import('ioredis');
     // lazyConnect: 연결을 첫 명령 실행 시점으로 미뤄서, 연결 실패가 await한 명령의
     // reject로 잡히게 함(그렇지 않으면 백그라운드에서 처리 안 된 에러로 터질 수 있음).
     client = new Redis(url, { lazyConnect: true, maxRetriesPerRequest: 2, connectTimeout: 5000 });
