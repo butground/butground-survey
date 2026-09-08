@@ -91,9 +91,9 @@ export default function AdminPage() {
                 <th className="px-3 py-2">이름</th>
                 <th className="px-3 py-2">직업</th>
                 <th className="px-3 py-2">연령대</th>
-                <th className="px-3 py-2">몸상태</th>
-                <th className="px-3 py-2">마음상태</th>
                 <th className="px-3 py-2">식문화경험</th>
+                <th className="px-3 py-2">인식_세부</th>
+                <th className="px-3 py-2">함께하고싶은사람</th>
                 <th className="px-3 py-2">남긴의견</th>
               </tr>
             </thead>
@@ -113,9 +113,12 @@ export default function AdminPage() {
                   <td className="px-3 py-2">{s.name}</td>
                   <td className="px-3 py-2">{s.job === '기타' ? s.job_other || '기타' : s.job}</td>
                   <td className="px-3 py-2">{s.age}</td>
-                  <td className="px-3 py-2">{s.body}</td>
-                  <td className="px-3 py-2">{s.mind}</td>
                   <td className="px-3 py-2">{(s.experience || []).join(', ')}</td>
+                  <td className="max-w-[240px] truncate px-3 py-2">{(s.branch_인식 || []).join(', ')}</td>
+                  <td className="max-w-[200px] truncate px-3 py-2">
+                    {(s.audience || []).join(', ')}
+                    {s.audience?.includes('기타') && s.audience_other ? ` (${s.audience_other})` : ''}
+                  </td>
                   <td className="max-w-[240px] truncate px-3 py-2">{s.feedback}</td>
                 </tr>
               ))}
