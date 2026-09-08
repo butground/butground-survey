@@ -58,6 +58,31 @@ const DEFAULT_GOOGLE_SHEETS_WEBHOOK_URL =
   'https://script.google.com/macros/s/AKfycbwAP47Fvd1dxhFuAGL8d-aiR8tTaNYGiRfQB4Ug3e5Y8GvJcyiw99AlF_zVmw-XvrvS/exec';
 
 /**
+ * Apps Script 웹앱(/exec) 주소는 POST를 받으면 실제 실행 주소로 302 리다이렉트를 하는데,
+ * 표준 fetch는 POST 요청의 리다이렉트를 따라가면서 메서드를 GET으로 바꿔버려 body(설문 데이터)가
+ * 통째로 사라진다(그 결과 doPost 대신 doGet이 실행되어 시트에 아무것도 안 쌓임).
+ * 이를 막기 위해 리다이렉트를 수동으로 따라가면서 POST를 유지한다.
+ */
+async function postFollowingRedirects(
+  url: string,
+  init: { headers: Record<string, string>; body: string },
+  maxRedirects = 5
+): Promise<Response> {
+  let currentUrl = url;
+  for (let i = 0; i < maxRedirects; i++) {
+    const res = await fetch(currentUrl, { ...init, method: 'POST', redirect: 'manual' });
+    if (res.status >= 300 && res.status < 400) {
+      const location = res.headers.get('location');
+      if (!location) return res;
+      currentUrl = new URL(location, currentUrl).toString();
+      continue;
+    }
+    return res;
+  }
+  throw new Error('too many redirects');
+}
+
+/**
  * 방식 1(기본값): 기존 프로토타입과 동일하게 Apps Script 웹앱 URL로 그대로 프록시 전달.
  * Content-Type을 text/plain으로 보내야 Apps Script 웹앱에서 CORS preflight 없이 받을 수 있음
  * (Apps Script 웹앱은 커스텀 헤더의 OPTIONS preflight에 응답하지 않기 때문).
@@ -68,11 +93,13 @@ async function saveViaAppsScriptWebhook(data: SubmitPayload): Promise<void> {
     console.warn('[벗밭 설문] GOOGLE_SHEETS_WEBHOOK_URL이 비어있어 구글 시트로 전송하지 않았어요.');
     return;
   }
-  await fetch(webhookUrl, {
-    method: 'POST',
+  const res = await postFollowingRedirects(webhookUrl, {
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(data),
   });
+  if (!res.ok) {
+    console.error('[벗밭 설문] 구글 시트 웹훅 응답 실패', res.status, await res.text());
+  }
 }
 
 /**
