@@ -9,8 +9,8 @@ export const baseBefore: Question[] = [
     id: 'name',
     type: 'text',
     required: true,
-    title: '성함이 어떻게 되시나요?',
-    placeholder: '이름을 입력해주세요',
+    title: '닉네임을 적어 주세요.',
+    placeholder: '닉네임을 입력해주세요',
   },
   {
     id: 'job',

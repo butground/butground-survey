@@ -7,10 +7,11 @@ import QuestionCard from './QuestionCard';
 import Controls from './Controls';
 import LoadingScreen from './LoadingScreen';
 import ResultScreen from './ResultScreen';
+import IntroScreen from './IntroScreen';
 import { buildFlow } from '@/lib/branching';
 import type { Question, QuestionOption, SurveyAnswers } from '@/types';
 
-type Screen = 'survey' | 'loading' | 'results';
+type Screen = 'intro' | 'survey' | 'loading' | 'results';
 
 const AUTO_ADVANCE_DELAY = 320;
 
@@ -27,7 +28,7 @@ function isAnswered(slide: Question, answers: SurveyAnswers): boolean {
 export default function SurveyApp() {
   const [answers, setAnswers] = useState<SurveyAnswers>({});
   const [index, setIndex] = useState(0);
-  const [screen, setScreen] = useState<Screen>('survey');
+  const [screen, setScreen] = useState<Screen>('intro');
   const [validationMsg, setValidationMsg] = useState('');
   const [shakeKey, setShakeKey] = useState(0);
 
@@ -64,7 +65,7 @@ export default function SurveyApp() {
     setAnswers({});
     setIndex(0);
     setValidationMsg('');
-    setScreen('survey');
+    setScreen('intro');
   }, []);
 
   const onTextChange = useCallback((id: string, value: string) => {
@@ -174,6 +175,10 @@ export default function SurveyApp() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screen]);
+
+  if (screen === 'intro') {
+    return <IntroScreen onStart={() => setScreen('survey')} />;
+  }
 
   if (screen === 'results') {
     return <ResultScreen answers={answers} onRestart={restart} />;

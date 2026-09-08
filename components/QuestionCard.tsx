@@ -1,5 +1,6 @@
 'use client';
 
+import { personalizeTitle } from '@/lib/personalize';
 import type { Question, QuestionOption, SurveyAnswers } from '@/types';
 
 function keyLabel(i: number): string {
@@ -45,6 +46,7 @@ export default function QuestionCard({
   const multi = slide.type === 'multi';
   const currentMulti: string[] = multi ? (answers[slide.id] as string[]) || [] : [];
   const currentSingle = !multi ? (answers[slide.id] as string | undefined) : undefined;
+  const title = personalizeTitle(slide.title, answers.name);
 
   return (
     <div key={slide.id} className="mx-auto w-full max-w-[660px] animate-rise">
@@ -53,7 +55,7 @@ export default function QuestionCard({
       </div>
 
       <h2 className="mb-2 text-[clamp(21px,3.4vw,30px)] font-semibold leading-[1.45] text-ink">
-        {renderTitle(slide.title, slide.emphasize)}
+        {renderTitle(title, slide.emphasize)}
         {slide.required && <span className="ml-0.5 text-accent">*</span>}
       </h2>
 
