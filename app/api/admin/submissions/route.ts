@@ -1,19 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isValidAdminKey } from '@/lib/admin-auth';
+import { NextResponse } from 'next/server';
 import { listSubmissions } from '@/lib/store';
 
-// 비밀번호 헤더에 따라 응답이 달라지므로 캐시되지 않도록 강제
+// 매번 최신 데이터를 반환해야 하므로 캐시되지 않도록 강제
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: NextRequest) {
-  const key = req.headers.get('x-admin-key');
-  if (!isValidAdminKey(key)) {
-    return NextResponse.json(
-      { status: 'error', message: 'unauthorized' },
-      { status: 401, headers: { 'Cache-Control': 'no-store' } }
-    );
-  }
-
+export async function GET() {
   const submissions = await listSubmissions();
   // 최신 제출이 위로 오도록 정렬
   submissions.sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));

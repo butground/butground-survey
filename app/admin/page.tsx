@@ -1,31 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { StoredSubmission } from '@/types';
 
 export default function AdminPage() {
-  const [passcode, setPasscode] = useState('');
-  const [authedKey, setAuthedKey] = useState<string | null>(null);
   const [submissions, setSubmissions] = useState<StoredSubmission[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  async function login(e: React.FormEvent) {
-    e.preventDefault();
+  async function refresh() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/admin/submissions', {
-        headers: { 'x-admin-key': passcode },
-        cache: 'no-store',
-      });
-      if (!res.ok) {
-        setError('비밀번호가 틀렸어요.');
-        return;
-      }
+      const res = await fetch('/api/admin/submissions', { cache: 'no-store' });
       const json = await res.json();
       setSubmissions(json.submissions || []);
-      setAuthedKey(passcode);
     } catch {
       setError('불러오는 중 오류가 발생했어요.');
     } finally {
@@ -33,27 +22,12 @@ export default function AdminPage() {
     }
   }
 
-  async function refresh() {
-    if (!authedKey) return;
-    setLoading(true);
-    try {
-      const res = await fetch('/api/admin/submissions', {
-        headers: { 'x-admin-key': authedKey },
-        cache: 'no-store',
-      });
-      const json = await res.json();
-      setSubmissions(json.submissions || []);
-    } finally {
-      setLoading(false);
-    }
-  }
+  useEffect(() => {
+    refresh();
+  }, []);
 
   async function download(format: 'csv' | 'xlsx') {
-    if (!authedKey) return;
-    const res = await fetch(`/api/admin/export?format=${format}`, {
-      headers: { 'x-admin-key': authedKey },
-      cache: 'no-store',
-    });
+    const res = await fetch(`/api/admin/export?format=${format}`, { cache: 'no-store' });
     if (!res.ok) {
       setError('다운로드에 실패했어요.');
       return;
@@ -67,33 +41,6 @@ export default function AdminPage() {
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
-  }
-
-  if (!authedKey) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-bg px-6">
-        <form onSubmit={login} className="w-full max-w-sm rounded-2xl border border-line bg-surface p-8">
-          <h1 className="mb-1 text-xl font-bold text-ink">관리자 로그인</h1>
-          <p className="mb-6 text-sm text-ink-soft">벗밭 설문 응답을 확인하려면 비밀번호를 입력하세요.</p>
-          <input
-            type="password"
-            value={passcode}
-            onChange={(e) => setPasscode(e.target.value)}
-            placeholder="비밀번호"
-            className="mb-3 w-full rounded-lg border-[1.5px] border-line px-3 py-2.5 text-[15px] outline-none focus:border-accent"
-            autoFocus
-          />
-          {error && <p className="mb-3 text-sm text-danger">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-accent px-4 py-2.5 font-sans text-sm font-bold text-white hover:bg-accent-dark disabled:opacity-60"
-          >
-            {loading ? '확인 중...' : '로그인'}
-          </button>
-        </form>
-      </div>
-    );
   }
 
   return (
@@ -150,7 +97,7 @@ export default function AdminPage() {
               {submissions.length === 0 && (
                 <tr>
                   <td colSpan={8} className="px-3 py-8 text-center text-ink-faint">
-                    아직 응답이 없어요.
+                    {loading ? '불러오는 중...' : '아직 응답이 없어요.'}
                   </td>
                 </tr>
               )}
