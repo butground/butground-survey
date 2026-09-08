@@ -7,7 +7,18 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   const format = req.nextUrl.searchParams.get('format') === 'xlsx' ? 'xlsx' : 'csv';
-  const submissions = await listSubmissions();
+
+  let submissions;
+  try {
+    submissions = await listSubmissions();
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error('[벗밭 설문] /api/admin/export 실패', err);
+    return NextResponse.json(
+      { status: 'error', message },
+      { status: 500, headers: { 'Cache-Control': 'no-store' } }
+    );
+  }
   submissions.sort((a, b) => a.submittedAt.localeCompare(b.submittedAt));
 
   const filename = `butground-survey-${new Date().toISOString().slice(0, 10)}.${format}`;

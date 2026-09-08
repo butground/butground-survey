@@ -15,6 +15,9 @@ export default function AdminPage() {
       const res = await fetch('/api/admin/submissions', { cache: 'no-store' });
       const json = await res.json();
       setSubmissions(json.submissions || []);
+      if (json.status === 'error') {
+        setError(`저장소 연결 실패: ${json.message}`);
+      }
     } catch {
       setError('불러오는 중 오류가 발생했어요.');
     } finally {
@@ -29,7 +32,8 @@ export default function AdminPage() {
   async function download(format: 'csv' | 'xlsx') {
     const res = await fetch(`/api/admin/export?format=${format}`, { cache: 'no-store' });
     if (!res.ok) {
-      setError('다운로드에 실패했어요.');
+      const json = await res.json().catch(() => null);
+      setError(json?.message ? `다운로드 실패: ${json.message}` : '다운로드에 실패했어요.');
       return;
     }
     const blob = await res.blob();
