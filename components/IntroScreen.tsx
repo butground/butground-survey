@@ -13,7 +13,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
           <img src="/intro-photo.jpg" alt="벗밭과 함께하는 식사 자리" className="h-full w-full object-cover" />
         </div>
 
-        <h1 className="text-[clamp(24px,5vw,34px)] font-extrabold leading-[1.5] text-ink">
+        <h1 className="text-[clamp(21px,3.4vw,30px)] font-semibold leading-[1.45] text-ink">
           안녕하세요, 벗님!
           <br />
           만나서 반가워요. 여러분은 어떻게 먹고 있나요?
