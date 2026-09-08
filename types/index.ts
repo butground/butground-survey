@@ -79,3 +79,9 @@ export interface SubmitPayload {
   audience_other: string;
   feedback: string;
 }
+
+/** 내부 저장소(KV)에 쌓이는 응답 1건. 제출 데이터 + 서버가 채워준 id/제출시각 */
+export interface StoredSubmission extends SubmitPayload {
+  id: string;
+  submittedAt: string;
+}

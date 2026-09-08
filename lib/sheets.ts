@@ -25,9 +25,9 @@ const SHEET_COLUMNS = [
   '원본JSON',
 ] as const;
 
-function toRow(data: SubmitPayload): (string | number)[] {
+function toRow(data: SubmitPayload, submittedAt: string = new Date().toISOString()): (string | number)[] {
   return [
-    new Date().toISOString(),
+    submittedAt,
     data.name || '',
     data.job || '',
     data.job_other || '',
@@ -155,4 +155,4 @@ export async function saveSurveyResponse(data: SubmitPayload): Promise<void> {
   }
 }
 
-export { SHEET_COLUMNS };
+export { SHEET_COLUMNS, toRow };
