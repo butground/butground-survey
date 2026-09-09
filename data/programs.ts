@@ -29,8 +29,8 @@ export const programsByTag: ProgramsByTag = {
       fieldVisits: [
         { text: '[월드비전] 식생활역량강화교육 연계 기관' },
         { text: '[나눔공동체학교] 느린학습자 청소년 생태먹거리 프로젝트 수업' },
-        { text: '', image: null, caption: '총 17개 주제별 강의 키트' },
-        { text: '', image: null, caption: '목적, 대상에 맞는 이야기 전달' },
+        { text: '', image: '/insight-kit.jpg', caption: '총 17개 주제별 강의 키트' },
+        { text: '', image: '/insight-lecture.jpg', caption: '목적, 대상에 맞는 이야기 전달' },
       ],
     },
   ],
