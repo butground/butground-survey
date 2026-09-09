@@ -23,12 +23,12 @@ function DiagramView({ categories }: { categories: ProgramDiagramCategory[] }) {
           const rightItems = cat.items.filter((_, i) => i % 2 === 1);
           const rowDelay = rowIndex * DIAGRAM_ROW_DELAY;
           return (
-            <div key={cat.label} className="flex items-center justify-center gap-2 py-1.5">
-              <div className="flex flex-1 flex-col items-end gap-1.5">
+            <div key={cat.label} className="flex items-center justify-center gap-2.5 py-2.5">
+              <div className="flex flex-1 flex-col items-end gap-2">
                 {leftItems.map((item, i) => (
                   <div
                     key={item}
-                    className="diagram-box-left rounded-md bg-surface-2 px-2.5 py-1 text-[11px] leading-tight text-ink-soft"
+                    className="diagram-box-left rounded-lg bg-surface-2 px-3.5 py-2 text-[16px] font-semibold leading-tight text-ink-soft"
                     style={{ animationDelay: `${rowDelay + 0.15 + i * 0.08}s` }}
                   >
                     {item}
@@ -37,17 +37,17 @@ function DiagramView({ categories }: { categories: ProgramDiagramCategory[] }) {
               </div>
 
               <div
-                className="diagram-circle relative z-10 flex h-14 w-14 flex-none items-center justify-center rounded-full bg-accent-soft text-center text-[11px] font-bold leading-tight text-accent-dark"
+                className="diagram-circle relative z-10 flex h-24 w-24 flex-none items-center justify-center rounded-full bg-accent-soft text-center text-[16px] font-bold leading-tight text-accent-dark"
                 style={{ animationDelay: `${rowDelay}s` }}
               >
                 {cat.label}
               </div>
 
-              <div className="flex flex-1 flex-col items-start gap-1.5">
+              <div className="flex flex-1 flex-col items-start gap-2">
                 {rightItems.map((item, i) => (
                   <div
                     key={item}
-                    className="diagram-box-right rounded-md bg-surface-2 px-2.5 py-1 text-[11px] leading-tight text-ink-soft"
+                    className="diagram-box-right rounded-lg bg-surface-2 px-3.5 py-2 text-[16px] font-semibold leading-tight text-ink-soft"
                     style={{ animationDelay: `${rowDelay + 0.15 + i * 0.08}s` }}
                   >
                     {item}
