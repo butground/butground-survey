@@ -11,7 +11,7 @@ export function getPersonalizedPrograms(answers: SurveyAnswers): ProgramCard[] {
   return branchOrder.filter((t) => tags.includes(t)).flatMap((t) => programsByTag[t]);
 }
 
-/** 전체 보기 화면용: 인식→실천→확장→안내 순서로 모든 태그의 카드를 합친 목록(총 6개) */
+/** 전체 보기 화면용: 인식→실천→확장→안내 순서로 모든 태그의 카드를 합친 목록(총 5개) */
 export function getAllPrograms(): ProgramCard[] {
   return branchOrder.flatMap((t) => programsByTag[t]);
 }

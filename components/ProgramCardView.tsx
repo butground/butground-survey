@@ -162,22 +162,17 @@ function FieldVisitItem({ visit }: { visit: ProgramFieldVisit }) {
 }
 
 export default function ProgramCardView({ program, index }: ProgramCardViewProps) {
-  const num = String(index + 1).padStart(2, '0');
+  const num = String(program.modelNumber ?? index + 1).padStart(2, '0');
   const hasRichContent = !!program.heading;
 
   return (
     <div className="overflow-hidden rounded-2xl border-[1.5px] border-line bg-surface">
-      <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 bg-accent-soft text-[13px] text-ink-faint">
-        {program.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
+      {program.image && (
+        <div className="aspect-video w-full">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={program.image} alt={program.title} className="h-full w-full object-cover" />
-        ) : (
-          <>
-            <span className="text-[34px]">{program.icon}</span>
-            <span>대표사진 자리</span>
-          </>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="px-5 pb-6 pt-5 sm:px-6 sm:pb-[26px] sm:pt-[22px]">
         <div className="mb-2 text-xs font-extrabold tracking-[.5px] text-accent">{num}</div>
@@ -239,7 +234,7 @@ export default function ProgramCardView({ program, index }: ProgramCardViewProps
                 <div className="mb-3 text-[12.5px] font-extrabold tracking-[.5px] text-ink-faint">
                   &lt;함께한 기관과 활동 내용&gt;
                 </div>
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-9">
                   {program.fieldVisits.map((v, i) => (
                     <FieldVisitItem key={i} visit={v} />
                   ))}

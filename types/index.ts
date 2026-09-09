@@ -88,11 +88,17 @@ export interface ProgramValueCard {
 
 export interface ProgramCard {
   icon: string;
-  /** 실제 대표사진 URL. null이면 자리표시 아이콘을 보여줌 */
-  image: string | null;
+  /** 실제 대표사진 URL. null/undefined면 대표사진 영역 자체를 표시하지 않음 */
+  image?: string | null;
   title: string;
   desc: string;
   link: string;
+  /**
+   * 결과 화면 카드 번호(01/02/03/04)에 쓰이는 값. 4개 교육 모델(인식/실천/확장/안내)
+   * 기준으로 매겨야 해서, 확장하기처럼 한 태그에 카드가 여러 개여도 같은 번호를 써야 함.
+   * 지정하지 않으면 화면에 보이는 순서(index+1)를 그대로 씀.
+   */
+  modelNumber?: number;
   /** 아래 필드가 있으면 카드가 제목+불릿+현장 둘러보기 형태의 상세 레이아웃으로 렌더링됨 */
   heading?: string;
   bullets?: ProgramBullet[];

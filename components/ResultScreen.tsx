@@ -70,7 +70,7 @@ export default function ResultScreen({ answers, onRestart, initialView = 'person
           </div>
         )}
 
-        <div className="mb-9 flex flex-col gap-4">
+        <div className="mb-9 flex flex-col gap-12">
           {list.map((p, i) => (
             <ProgramCardView key={p.title} program={p} index={i} />
           ))}

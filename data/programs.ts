@@ -3,8 +3,10 @@ import type { ProgramsByTag } from '@/types';
 /**
  * 태그별 결과 화면 프로그램 카드. 4개 모델명: 식생활 알아가기(인식) · 음식시민 되기(실천) ·
  * 지역 만나기(확장) · 경험 나누기(안내).
+ * 카드 번호(01~04)는 modelNumber로 고정 지정함 — 확장하기처럼 한 태그에 카드가 여러 개여도
+ * "지역 만나기"라는 하나의 모델이므로 전부 같은 번호(03)를 씀.
  * ⚠️ '경험 나누기(안내)' 카드는 아직 실제 사례 텍스트를 못 받아서 기존 요약 문구를 heading으로만
- *    옮겨둔 상태(대표사진은 반영됨). 생태미식캠프 카드도 대표사진/영상만 있고 세부 fieldVisits는 아직 없음.
+ *    옮겨둔 상태(대표사진은 반영됨).
  *    link/fieldVisits[].links[].url이 '#'인 곳은 실제 링크로 교체하면 됨.
  */
 export const programsByTag: ProgramsByTag = {
@@ -12,6 +14,7 @@ export const programsByTag: ProgramsByTag = {
     {
       icon: '📖',
       image: null,
+      modelNumber: 1,
       title: '식사 너머의 이야기 워크숍 (가제)',
       desc: '먹거리가 식탁에 오르기까지의 생산·가공·유통 이야기를 들려주는 프로그램이에요.',
       link: '#',
@@ -38,7 +41,8 @@ export const programsByTag: ProgramsByTag = {
   실천: [
     {
       icon: '🍳',
-      image: '/practice-hero.jpg',
+      image: null,
+      modelNumber: 2,
       title: '제철 식탁 실천 클래스 (가제)',
       desc: '식재료와 조리법을 직접 다뤄보며 나의 식사 습관과 태도를 돌아보는 프로그램이에요.',
       link: '#',
@@ -76,7 +80,8 @@ export const programsByTag: ProgramsByTag = {
   확장: [
     {
       icon: '🚜',
-      image: '/expand-hero.jpg',
+      image: null,
+      modelNumber: 3,
       title: '농가방문',
       desc: '제철 먹거리를 직접 기르는 농부님을 찾아가 생산 현장을 눈으로 확인하고, 재배 과정과 이야기를 직접 듣는 프로그램이에요.',
       link: '#',
@@ -122,6 +127,7 @@ export const programsByTag: ProgramsByTag = {
         {
           label: '[밭에서 만나는 계절]',
           text: '아이들과 함께 식탁 너머 작물이 자라는 모습을 관찰하고 함께 밭에서 식탁까지의 과정을 경험해요. 오감으로 밭을 즐겨요!',
+          image: '/expand-hero.jpg',
         },
         {
           label: '[샐러드연맹X벗밭]',
@@ -132,23 +138,16 @@ export const programsByTag: ProgramsByTag = {
     },
     {
       icon: '🏕️',
-      image: '/ecocamp-hero.jpg',
-      title: '생태미식캠프, 생태미식여행학교',
-      desc: '지역의 자연과 먹거리, 사람을 며칠간 깊이 만나는 캠프형 프로그램이에요.',
+      image: null,
+      modelNumber: 3,
+      title: '생태미식캠프, 생태미식여행학교 · 식문화 PBL - 환대의식탁',
+      desc: '지역의 자연과 먹거리, 사람을 며칠간 깊이 만나는 캠프형 프로그램과, 지역의 먹거리 문제를 직접 발견하고 더 나은 식문화를 스스로 기획해보는 프로젝트 기반 학습(PBL) 프로그램이에요.',
       link: '#',
       heading: '[지역 만나기] 밭과 지역을 직접 경험하며 자연과 사람, 먹거리의 연결을 만나는 생태미식캠프 · 프로젝트 수업',
       video: {
         embedUrl: 'https://drive.google.com/file/d/1J9j2nLk2Bn1oE1FEw1gOWnZ-rEEyH3Jm/preview',
         caption: '생태미식캠프 예시 영상',
       },
-    },
-    {
-      icon: '🍽️',
-      image: null,
-      title: '식문화 PBL - 환대의식탁',
-      desc: '우리 지역의 먹거리 문제를 직접 발견하고, 더 나은 식문화를 스스로 기획해보는 프로젝트 기반 학습(PBL) 프로그램이에요.',
-      link: '#',
-      heading: '[지역 만나기] 밭과 지역을 직접 경험하며 자연과 사람, 먹거리의 연결을 만나는 생태미식캠프 · 프로젝트 수업',
       fieldVisits: [
         {
           label: '[서강대X벗밭]',
@@ -169,6 +168,7 @@ export const programsByTag: ProgramsByTag = {
     {
       icon: '🧑‍🏫',
       image: '/guide-hero.jpg',
+      modelNumber: 4,
       title: '식문화 교육 퍼실리테이터 과정 (가제)',
       desc: '좋은 식경험을 직접 기획하고 진행할 수 있도록 교육·활동 설계 방법을 안내하는 프로그램이에요.',
       link: '#',
