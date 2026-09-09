@@ -66,23 +66,27 @@ function FieldVisitItem({ visit }: { visit: ProgramFieldVisit }) {
   const hasImage = visit.image !== undefined;
   return (
     <div className="flex flex-col gap-2.5">
-      {visit.text && (
+      {(visit.label || visit.text) && (
         <p className="text-[14px] leading-[1.65] text-ink-soft">
+          {visit.label && <strong className="text-[14.5px] font-bold text-ink">{visit.label}</strong>}
+          {visit.label && visit.text && ' '}
           {visit.text}
-          {visit.link && (
-            <>
-              {' '}
-              <a
-                href={visit.link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-b border-accent text-accent no-underline"
-              >
-                {visit.link.text}
-              </a>
-            </>
-          )}
         </p>
+      )}
+      {visit.links && visit.links.length > 0 && (
+        <div className="flex flex-wrap gap-x-6 gap-y-2">
+          {visit.links.map((l, i) => (
+            <a
+              key={i}
+              href={l.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border-b-[1.5px] border-accent pb-px text-[13.5px] font-bold text-accent no-underline"
+            >
+              {l.text}
+            </a>
+          ))}
+        </div>
       )}
       {hasImage && (
         <div className="overflow-hidden rounded-xl">
@@ -159,6 +163,23 @@ export default function ProgramCardView({ program, index }: ProgramCardViewProps
             )}
 
             {program.diagram && program.diagram.length > 0 && <DiagramView categories={program.diagram} />}
+
+            {program.video && (
+              <div className="mb-5">
+                <div className="overflow-hidden rounded-xl">
+                  <iframe
+                    src={program.video.embedUrl}
+                    title={program.video.caption || program.title}
+                    className="aspect-video w-full"
+                    allow="autoplay"
+                    allowFullScreen
+                  />
+                </div>
+                {program.video.caption && (
+                  <p className="mt-2 text-[13.5px] font-semibold leading-[1.5] text-ink">{program.video.caption}</p>
+                )}
+              </div>
+            )}
 
             {program.fieldVisits && program.fieldVisits.length > 0 && (
               <div className="border-t border-line pt-4">

@@ -57,12 +57,15 @@ export interface ProgramBullet {
   subBullets?: string[];
 }
 
-/** "현장 둘러보기" 섹션의 사례 하나. 사진/캡션/관련 링크는 선택 */
+/** "함께한 기관과 활동 내용" 섹션의 사례 하나. 사진/캡션/관련 링크는 선택 */
 export interface ProgramFieldVisit {
+  /** 기관/활동명 등 굵게 강조할 부분(예: "[서울청년센터] 제철 식사 교육") */
+  label?: string;
   text: string;
   image?: string | null;
   caption?: string;
-  link?: { text: string; url: string };
+  /** 관련 콘텐츠 버튼(들). 여러 개면 나란히 넉넉한 간격으로 표시됨 */
+  links?: { text: string; url: string }[];
 }
 
 /** 인식하기 카드에서만 쓰는 5단계 다이어그램(생산→가공→유통→소비→폐기) */
@@ -83,6 +86,8 @@ export interface ProgramCard {
   bullets?: ProgramBullet[];
   diagram?: ProgramDiagramCategory[];
   fieldVisits?: ProgramFieldVisit[];
+  /** 구글 드라이브 등에서 가져온 임베드 영상 (16:9 iframe으로 표시) */
+  video?: { embedUrl: string; caption?: string };
 }
 
 export type ProgramsByTag = Record<ExperienceTag, ProgramCard[]>;

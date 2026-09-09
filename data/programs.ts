@@ -27,8 +27,8 @@ export const programsByTag: ProgramsByTag = {
         { label: '폐기/순환', items: ['업사이클링', '토종씨앗', '친환경'] },
       ],
       fieldVisits: [
-        { text: '[월드비전] 식생활역량강화교육 연계 기관' },
-        { text: '[나눔공동체학교] 느린학습자 청소년 생태먹거리 프로젝트 수업' },
+        { label: '[월드비전]', text: '식생활역량강화교육 연계 기관' },
+        { label: '[나눔공동체학교]', text: '느린학습자 청소년 생태먹거리 프로젝트 수업' },
         { text: '', image: '/insight-kit.jpg', caption: '총 17개 주제별 강의 키트' },
         { text: '', image: '/insight-lecture.jpg', caption: '목적, 대상에 맞는 이야기 전달' },
       ],
@@ -54,13 +54,20 @@ export const programsByTag: ProgramsByTag = {
       ],
       fieldVisits: [
         {
-          text: "[서울청년센터] 제철 식사 교육 - '조립식 레시피'를 통해 나의 환경과 입맛에 맞게 만들어갑니다.",
+          label: '[서울청년센터] 제철 식사 교육',
+          text: "- '조립식 레시피'를 통해 나의 환경과 입맛에 맞게 만들어갑니다.",
           image: '/seoulyouth.jpg',
         },
         {
-          text: '[마르쉐 농부시장X벗밭] 지구농부들의 제철 꾸러미를 나누고 함께 요리해 먹는 계절 모임입니다.',
+          label: '[마르쉐 농부시장X벗밭]',
+          text: '지구농부들의 제철 꾸러미를 나누고 함께 요리해 먹는 계절 모임입니다.',
           image: '/marche.jpg',
-          link: { text: '"퇴근후마르쉐는, 이미 존재하던 연결을 알아차리게 해줘요" 윤 님과의 대화 : 벗밭의 벗과 함께 나눈 이야기들', url: '#' },
+          links: [
+            {
+              text: '"퇴근후마르쉐는, 이미 존재하던 연결을 알아차리게 해줘요" 윤 님과의 대화 : 벗밭의 벗과 함께 나눈 이야기들',
+              url: '#',
+            },
+          ],
         },
       ],
     },
@@ -75,10 +82,12 @@ export const programsByTag: ProgramsByTag = {
       heading: '[확장하기] 농가 방문 · 생산 현장에서 식재료의 전 과정을 이해하고 생산자와의 유대를 형성합니다.',
       fieldVisits: [
         {
-          text: '[밭에서 만나는 계절] 아이들과 함께 식탁 너머 작물이 자라는 모습을 관찰하고 함께 밭에서 식탁까지의 과정을 경험해요. 오감으로 밭을 즐겨요!',
+          label: '[밭에서 만나는 계절]',
+          text: '아이들과 함께 식탁 너머 작물이 자라는 모습을 관찰하고 함께 밭에서 식탁까지의 과정을 경험해요. 오감으로 밭을 즐겨요!',
         },
         {
-          text: '[샐러드연맹X벗밭] 냉이마트 — 당신이 먹는 냉이는 마트에서 자라는 게 아니에요! 마트에서는 보이지 않는 풍경을 직접 만나고 바로 캔 냉이를 함께 맛보는 시간! 다양한 식물들의 이름도 살펴보아요.',
+          label: '[샐러드연맹X벗밭]',
+          text: '냉이마트 — 당신이 먹는 냉이는 마트에서 자라는 게 아니에요! 마트에서는 보이지 않는 풍경을 직접 만나고 바로 캔 냉이를 함께 맛보는 시간! 다양한 식물들의 이름도 살펴보아요.',
           image: '/naengi-mart.jpg',
         },
       ],
@@ -90,6 +99,10 @@ export const programsByTag: ProgramsByTag = {
       desc: '지역의 자연과 먹거리, 사람을 며칠간 깊이 만나는 캠프형 프로그램이에요.',
       link: '#',
       heading: '[확장하기] 생태미식캠프 · 자연과 미식이 어우러진 몰입형 경험을 통해 공동체 기반의 식문화를 체득합니다.',
+      video: {
+        embedUrl: 'https://drive.google.com/file/d/1J9j2nLk2Bn1oE1FEw1gOWnZ-rEEyH3Jm/preview',
+        caption: '생태미식캠프 예시 영상',
+      },
     },
     {
       icon: '🍽️',
@@ -100,9 +113,16 @@ export const programsByTag: ProgramsByTag = {
       heading: '[확장하기] 식문화 PBL · 일상과 지역사회의 문제를 발견하고 주체적으로 해결하는 프로젝트 기반 학습입니다.',
       fieldVisits: [
         {
-          text: "[서강대X벗밭] <환대의 식탁>, <혼디드렁> 다양한 지역에서 내가 딛고 있는 땅과 이웃과 더불어 살아가는 사람들을 만나 이야기하고, '나는 어떻게 살고 싶은가?'에 관해 이야기합니다.",
+          label: '[서강대X벗밭]',
+          text: "<환대의 식탁>, <혼디드렁> 다양한 지역에서 내가 딛고 있는 땅과 이웃과 더불어 살아가는 사람들을 만나 이야기하고, '나는 어떻게 살고 싶은가?'에 관해 이야기합니다.",
           image: '/sogang-pbl.jpg',
-          link: { text: '관련 콘텐츠', url: 'https://youtu.be/ouC9Aksn3cM?si=ip9L-WBma8b73zC_' },
+          links: [
+            { text: '관련 콘텐츠 보기 (영상)', url: 'https://youtu.be/ouC9Aksn3cM?si=ip9L-WBma8b73zC_' },
+            {
+              text: '관련 콘텐츠 보기 (보도자료)',
+              url: 'https://www.sogang.ac.kr/ko/detail/547874?namepage=StoryMedia&text=%EC%84%9C%EA%B0%95+Story&redirect=/ko/story/media-center?tab=1',
+            },
+          ],
         },
       ],
     },

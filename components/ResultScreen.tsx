@@ -76,11 +76,6 @@ export default function ResultScreen({ answers, onRestart, initialView = 'person
           ))}
         </div>
 
-        <div className="mb-9 rounded-lg bg-surface-2 px-3.5 py-3 text-[12.5px] leading-[1.6] text-ink-faint">
-          ※ 위 프로그램 사진·링크는 테스트용 자리표시입니다. 실제 대표사진과 콘텐츠 링크를 전달해주시면 그대로
-          교체할게요.
-        </div>
-
         <div className="mb-7 border-y border-line px-5 py-10 text-center">
           {!isAllView && (
             <button
@@ -113,14 +108,6 @@ export default function ResultScreen({ answers, onRestart, initialView = 'person
         >
           설문 다시 하기
         </button>
-
-        {/* 개발/테스트 확인용. 실서비스 배포 시에는 이 영역을 제거해도 됨. */}
-        <details className="mt-[30px] text-[13px] text-ink-soft">
-          <summary className="cursor-pointer">응답 데이터 확인 (테스트용)</summary>
-          <pre className="mt-2.5 whitespace-pre-wrap break-all rounded-lg bg-surface-2 p-3.5 text-xs">
-            {JSON.stringify(answers, null, 2)}
-          </pre>
-        </details>
       </div>
     </div>
   );
