@@ -24,6 +24,8 @@ export interface Question {
   max?: number;
   /** 분기 질문일 경우, 어떤 태그에 연결된 질문인지 */
   branchTag?: ExperienceTag;
+  /** text 타입일 때 모바일 키보드 최적화용 input type (기본값 'text') */
+  inputType?: 'text' | 'tel' | 'email';
 }
 
 export type ExperienceTag = '인식' | '실천' | '확장' | '안내';
@@ -46,6 +48,8 @@ export interface SurveyAnswers {
   branch_안내?: string[];
   audience?: string[];
   audience_other?: string;
+  contact?: string;
+  newsletter_email?: string;
   feedback?: string;
   [key: string]: AnswerValue;
 }
@@ -128,6 +132,8 @@ export interface SubmitPayload {
   branch_안내: string[];
   audience: string[];
   audience_other: string;
+  contact: string;
+  newsletter_email: string;
   feedback: string;
 }
 

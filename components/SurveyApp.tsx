@@ -173,6 +173,8 @@ export default function SurveyApp() {
       branch_안내: answers.branch_안내 || [],
       audience: answers.audience || [],
       audience_other: answers.audience_other || '',
+      contact: answers.contact || '',
+      newsletter_email: answers.newsletter_email || '',
       feedback: answers.feedback || '',
     };
     fetch('/api/submit', {

@@ -46,14 +46,15 @@ function doPost(e) {
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(['제출시각','이름','직업','직업(기타)','연령대','몸상태(1-10)','마음상태(1-10)',
       '식사의미','앞으로의식탁','식문화경험','인식_세부','실천_세부','확장_세부','안내_세부',
-      '함께하고싶은사람','함께하고싶은사람(기타)','남긴의견','원본JSON']);
+      '함께하고싶은사람','함께하고싶은사람(기타)','연락처','교육소식이메일','남긴의견','원본JSON']);
   }
   sheet.appendRow([new Date(), data.name||'', data.job||'', data.job_other||'',
     data.age||'', data.body||'', data.mind||'', (data.meaning||[]).join(', '),
     (data.table||[]).join(', '), (data.experience||[]).join(', '),
     (data.branch_인식||[]).join(', '), (data.branch_실천||[]).join(', '),
     (data.branch_확장||[]).join(', '), (data.branch_안내||[]).join(', '),
-    (data.audience||[]).join(', '), data.audience_other||'', data.feedback||'',
+    (data.audience||[]).join(', '), data.audience_other||'',
+    data.contact||'', data.newsletter_email||'', data.feedback||'',
     JSON.stringify(data)]);
   return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
     .setMimeType(ContentService.MimeType.JSON);

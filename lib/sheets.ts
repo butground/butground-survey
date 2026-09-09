@@ -21,6 +21,8 @@ const SHEET_COLUMNS = [
   '안내_세부',
   '함께하고싶은사람',
   '함께하고싶은사람(기타)',
+  '연락처',
+  '교육소식이메일',
   '남긴의견',
   '원본JSON',
 ] as const;
@@ -43,6 +45,8 @@ function toRow(data: SubmitPayload, submittedAt: string = new Date().toISOString
     (data.branch_안내 || []).join(', '),
     (data.audience || []).join(', '),
     data.audience_other || '',
+    data.contact || '',
+    data.newsletter_email || '',
     data.feedback || '',
     JSON.stringify(data),
   ];

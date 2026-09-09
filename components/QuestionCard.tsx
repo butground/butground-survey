@@ -164,7 +164,8 @@ function TextField({
   return (
     <input
       {...commonProps}
-      type="text"
+      type={slide.inputType || 'text'}
+      inputMode={slide.inputType === 'tel' ? 'tel' : slide.inputType === 'email' ? 'email' : undefined}
       aria-label={slide.title}
       className="w-full border-0 border-b-2 border-line bg-transparent px-0.5 py-2 pb-3 font-sans text-xl text-ink outline-none placeholder:text-ink-faint focus:border-accent"
       onKeyDown={(e) => {
