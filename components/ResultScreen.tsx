@@ -10,10 +10,11 @@ const APPLICATION_FORM_URL = 'https://forms.gle/cuPoA73yfbUGbs8n6';
 interface ResultScreenProps {
   answers: SurveyAnswers;
   onRestart: () => void;
+  initialView?: 'personalized' | 'all';
 }
 
-export default function ResultScreen({ answers, onRestart }: ResultScreenProps) {
-  const [viewMode, setViewMode] = useState<'personalized' | 'all'>('personalized');
+export default function ResultScreen({ answers, onRestart, initialView = 'personalized' }: ResultScreenProps) {
+  const [viewMode, setViewMode] = useState<'personalized' | 'all'>(initialView);
 
   const personalized = useMemo(() => getPersonalizedPrograms(answers), [answers]);
   const all = useMemo(() => getAllPrograms(), []);

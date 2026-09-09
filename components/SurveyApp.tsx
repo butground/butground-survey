@@ -31,6 +31,15 @@ export default function SurveyApp() {
   const [screen, setScreen] = useState<Screen>('intro');
   const [validationMsg, setValidationMsg] = useState('');
   const [shakeKey, setShakeKey] = useState(0);
+  // ?preview=results 로 접속하면 설문을 건너뛰고 바로 결과 화면(전체 보기)을 확인할 수 있음
+  const [isPreview, setIsPreview] = useState(false);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('preview') === 'results') {
+      setIsPreview(true);
+      setScreen('results');
+    }
+  }, []);
 
   const answersRef = useRef(answers);
   answersRef.current = answers;
@@ -181,7 +190,7 @@ export default function SurveyApp() {
   }
 
   if (screen === 'results') {
-    return <ResultScreen answers={answers} onRestart={restart} />;
+    return <ResultScreen answers={answers} onRestart={restart} initialView={isPreview ? 'all' : 'personalized'} />;
   }
 
   if (screen === 'loading') {
