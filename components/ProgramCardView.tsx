@@ -1,8 +1,59 @@
-import type { ProgramCard, ProgramDiagramCategory, ProgramFieldVisit } from '@/types';
+import type { ProgramCard, ProgramDiagramCategory, ProgramFieldVisit, ProgramValueCard } from '@/types';
 
 interface ProgramCardViewProps {
   program: ProgramCard;
   index: number;
+}
+
+/** desc 안의 **굵게** 표시를 <strong>으로 변환해서 렌더링 */
+function renderBoldMarkup(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={i} className="font-bold text-ink">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
+const VALUE_CARD_DELAY = 0.15;
+
+function ValuesGrid({ values }: { values: ProgramValueCard[] }) {
+  return (
+    <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {values.map((v, i) => (
+        <div
+          key={v.titleEn}
+          className={`value-card rounded-xl border border-line bg-surface-2/60 p-4 ${
+            i === values.length - 1 && values.length % 2 === 1 ? 'sm:col-span-2' : ''
+          }`}
+          style={{ animationDelay: `${i * VALUE_CARD_DELAY}s` }}
+        >
+          <div className="mb-2 flex items-center gap-2">
+            <span className="text-xl">{v.icon}</span>
+            <h4 className="text-[15.5px] font-bold text-ink">
+              {v.titleKo} <span className="font-semibold text-ink-soft">({v.titleEn})</span>
+            </h4>
+          </div>
+          <p className="mb-3 text-[13.5px] leading-[1.65] text-ink-soft">{renderBoldMarkup(v.desc)}</p>
+          <div className="flex flex-wrap gap-1.5">
+            {v.sdgs.map((sdg) => (
+              <span
+                key={sdg}
+                className="rounded-md bg-surface px-2 py-1 text-[11.5px] font-medium leading-tight text-ink-soft"
+              >
+                {sdg}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 const DIAGRAM_ROW_DELAY = 0.35;
@@ -163,6 +214,8 @@ export default function ProgramCardView({ program, index }: ProgramCardViewProps
             )}
 
             {program.diagram && program.diagram.length > 0 && <DiagramView categories={program.diagram} />}
+
+            {program.values && program.values.length > 0 && <ValuesGrid values={program.values} />}
 
             {program.video && (
               <div className="mb-5">

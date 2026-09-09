@@ -74,6 +74,18 @@ export interface ProgramDiagramCategory {
   items: string[];
 }
 
+/**
+ * 확장하기 카드에서 쓰는 가치 카드 한 장(생태/미식/관계/커뮤니티/실천 등).
+ * desc 안에서 **이렇게** 감싼 부분은 굵게 렌더링됨.
+ */
+export interface ProgramValueCard {
+  icon: string;
+  titleKo: string;
+  titleEn: string;
+  desc: string;
+  sdgs: string[];
+}
+
 export interface ProgramCard {
   icon: string;
   /** 실제 대표사진 URL. null이면 자리표시 아이콘을 보여줌 */
@@ -88,6 +100,8 @@ export interface ProgramCard {
   fieldVisits?: ProgramFieldVisit[];
   /** 구글 드라이브 등에서 가져온 임베드 영상 (16:9 iframe으로 표시) */
   video?: { embedUrl: string; caption?: string };
+  /** "함께한 기관과 활동 내용" 위에 표시되는 가치 카드 그리드 (현재 확장하기에서만 사용) */
+  values?: ProgramValueCard[];
 }
 
 export type ProgramsByTag = Record<ExperienceTag, ProgramCard[]>;

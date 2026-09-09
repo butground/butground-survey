@@ -89,11 +89,29 @@ body {
   animation: diagramBoxRightIn 0.4s ease-out forwards;
 }
 
+/* 확장하기 카드의 생태/미식/관계/커뮤니티/실천 가치 카드 애니메이션 */
+@keyframes valueCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.value-card {
+  opacity: 0;
+  animation: valueCardIn 0.5s ease-out forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .diagram-line,
   .diagram-circle,
   .diagram-box-left,
-  .diagram-box-right {
+  .diagram-box-right,
+  .value-card {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
