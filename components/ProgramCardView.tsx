@@ -1,16 +1,73 @@
-import type { ProgramCard, ProgramFieldVisit } from '@/types';
+import type { ProgramCard, ProgramDiagramCategory, ProgramFieldVisit } from '@/types';
 
 interface ProgramCardViewProps {
   program: ProgramCard;
   index: number;
 }
 
+const DIAGRAM_ROW_DELAY = 0.35;
+
+function DiagramView({ categories }: { categories: ProgramDiagramCategory[] }) {
+  const lineDuration = categories.length * DIAGRAM_ROW_DELAY + 0.8;
+
+  return (
+    <div className="relative mb-5">
+      <div
+        className="diagram-line absolute left-1/2 top-2 w-0.5 -translate-x-1/2 border-l-2 border-dashed border-accent/50"
+        style={{ bottom: '8px', animationDuration: `${lineDuration}s` }}
+        aria-hidden="true"
+      />
+      <div className="flex flex-col">
+        {categories.map((cat, rowIndex) => {
+          const leftItems = cat.items.filter((_, i) => i % 2 === 0);
+          const rightItems = cat.items.filter((_, i) => i % 2 === 1);
+          const rowDelay = rowIndex * DIAGRAM_ROW_DELAY;
+          return (
+            <div key={cat.label} className="flex items-center justify-center gap-2 py-1.5">
+              <div className="flex flex-1 flex-col items-end gap-1.5">
+                {leftItems.map((item, i) => (
+                  <div
+                    key={item}
+                    className="diagram-box-left rounded-md bg-surface-2 px-2.5 py-1 text-[11px] leading-tight text-ink-soft"
+                    style={{ animationDelay: `${rowDelay + 0.15 + i * 0.08}s` }}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              <div
+                className="diagram-circle relative z-10 flex h-14 w-14 flex-none items-center justify-center rounded-full bg-accent-soft text-center text-[11px] font-bold leading-tight text-accent-dark"
+                style={{ animationDelay: `${rowDelay}s` }}
+              >
+                {cat.label}
+              </div>
+
+              <div className="flex flex-1 flex-col items-start gap-1.5">
+                {rightItems.map((item, i) => (
+                  <div
+                    key={item}
+                    className="diagram-box-right rounded-md bg-surface-2 px-2.5 py-1 text-[11px] leading-tight text-ink-soft"
+                    style={{ animationDelay: `${rowDelay + 0.15 + i * 0.08}s` }}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function FieldVisitItem({ visit }: { visit: ProgramFieldVisit }) {
   const hasImage = visit.image !== undefined;
   return (
-    <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+    <div className="flex flex-col gap-2.5">
       {visit.text && (
-        <p className="flex-1 text-[14px] leading-[1.65] text-ink-soft">
+        <p className="text-[14px] leading-[1.65] text-ink-soft">
           {visit.text}
           {visit.link && (
             <>
@@ -28,18 +85,21 @@ function FieldVisitItem({ visit }: { visit: ProgramFieldVisit }) {
         </p>
       )}
       {hasImage && (
-        <div className="flex items-center gap-3">
-          <div className="flex aspect-[4/3] w-24 flex-none flex-col items-center justify-center gap-1 rounded-lg bg-accent-soft text-[11.5px] text-ink-faint">
+        <div className="overflow-hidden rounded-xl">
+          <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 bg-accent-soft text-[13px] text-ink-faint">
             {visit.image ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={visit.image} alt={visit.caption || ''} className="h-full w-full rounded-lg object-cover" />
+              <img src={visit.image} alt={visit.caption || ''} className="h-full w-full object-cover" />
             ) : (
               <>
-                <span className="text-xl">🖼️</span>
+                <span className="text-[28px]">🖼️</span>
+                <span>사진 자리</span>
               </>
             )}
           </div>
-          {visit.caption && <p className="flex-1 text-[13px] font-semibold leading-[1.5] text-ink">{visit.caption}</p>}
+          {visit.caption && (
+            <p className="mt-2 text-[13.5px] font-semibold leading-[1.5] text-ink">{visit.caption}</p>
+          )}
         </div>
       )}
     </div>
@@ -52,19 +112,17 @@ export default function ProgramCardView({ program, index }: ProgramCardViewProps
 
   return (
     <div className="overflow-hidden rounded-2xl border-[1.5px] border-line bg-surface">
-      {!hasRichContent && (
-        <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 bg-accent-soft text-[13px] text-ink-faint">
-          {program.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={program.image} alt={program.title} className="h-full w-full object-cover" />
-          ) : (
-            <>
-              <span className="text-[34px]">{program.icon}</span>
-              <span>대표사진 자리</span>
-            </>
-          )}
-        </div>
-      )}
+      <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 bg-accent-soft text-[13px] text-ink-faint">
+        {program.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={program.image} alt={program.title} className="h-full w-full object-cover" />
+        ) : (
+          <>
+            <span className="text-[34px]">{program.icon}</span>
+            <span>대표사진 자리</span>
+          </>
+        )}
+      </div>
 
       <div className="px-5 pb-6 pt-5 sm:px-6 sm:pb-[26px] sm:pt-[22px]">
         <div className="mb-2 text-xs font-extrabold tracking-[.5px] text-accent">{num}</div>
@@ -100,34 +158,14 @@ export default function ProgramCardView({ program, index }: ProgramCardViewProps
               </ul>
             )}
 
-            {program.diagram && program.diagram.length > 0 && (
-              <div className="mb-5 -mx-1 flex gap-3 overflow-x-auto px-1 pb-2">
-                {program.diagram.map((cat) => (
-                  <div key={cat.label} className="flex w-[100px] flex-none flex-col items-center gap-2">
-                    <div className="flex h-14 w-14 flex-none items-center justify-center rounded-full bg-accent-soft text-center text-[11px] font-bold leading-tight text-accent-dark">
-                      {cat.label}
-                    </div>
-                    <div className="flex w-full flex-col gap-1">
-                      {cat.items.map((item) => (
-                        <div
-                          key={item}
-                          className="rounded-md bg-surface-2 px-1.5 py-1 text-center text-[11px] leading-tight text-ink-soft"
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            {program.diagram && program.diagram.length > 0 && <DiagramView categories={program.diagram} />}
 
             {program.fieldVisits && program.fieldVisits.length > 0 && (
               <div className="border-t border-line pt-4">
                 <div className="mb-3 text-[12.5px] font-extrabold tracking-[.5px] text-ink-faint">
-                  &lt;현장 둘러보기&gt;
+                  &lt;함께한 기관과 활동 내용&gt;
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-5">
                   {program.fieldVisits.map((v, i) => (
                     <FieldVisitItem key={i} visit={v} />
                   ))}

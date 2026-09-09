@@ -25,3 +25,77 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* 인식하기 카드의 생산→가공→유통→소비→폐기 다이어그램 애니메이션 */
+@keyframes diagramLineGrow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes diagramCircleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes diagramBoxLeftIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes diagramBoxRightIn {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.diagram-line {
+  animation: diagramLineGrow 1.4s ease-out forwards;
+  transform-origin: top;
+}
+
+.diagram-circle {
+  opacity: 0;
+  animation: diagramCircleIn 0.5s ease-out forwards;
+}
+
+.diagram-box-left {
+  opacity: 0;
+  animation: diagramBoxLeftIn 0.4s ease-out forwards;
+}
+
+.diagram-box-right {
+  opacity: 0;
+  animation: diagramBoxRightIn 0.4s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagram-line,
+  .diagram-circle,
+  .diagram-box-left,
+  .diagram-box-right {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
