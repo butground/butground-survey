@@ -50,6 +50,27 @@ export interface SurveyAnswers {
   [key: string]: AnswerValue;
 }
 
+/** "라벨 | 설명" 형태의 불릿 한 줄. subBullets가 있으면 그 아래 한 단계 들여써서 보여줌 */
+export interface ProgramBullet {
+  label?: string;
+  text: string;
+  subBullets?: string[];
+}
+
+/** "현장 둘러보기" 섹션의 사례 하나. 사진/캡션/관련 링크는 선택 */
+export interface ProgramFieldVisit {
+  text: string;
+  image?: string | null;
+  caption?: string;
+  link?: { text: string; url: string };
+}
+
+/** 인식하기 카드에서만 쓰는 5단계 다이어그램(생산→가공→유통→소비→폐기) */
+export interface ProgramDiagramCategory {
+  label: string;
+  items: string[];
+}
+
 export interface ProgramCard {
   icon: string;
   /** 실제 대표사진 URL. null이면 자리표시 아이콘을 보여줌 */
@@ -57,6 +78,11 @@ export interface ProgramCard {
   title: string;
   desc: string;
   link: string;
+  /** 아래 필드가 있으면 카드가 제목+불릿+현장 둘러보기 형태의 상세 레이아웃으로 렌더링됨 */
+  heading?: string;
+  bullets?: ProgramBullet[];
+  diagram?: ProgramDiagramCategory[];
+  fieldVisits?: ProgramFieldVisit[];
 }
 
 export type ProgramsByTag = Record<ExperienceTag, ProgramCard[]>;
