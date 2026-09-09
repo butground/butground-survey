@@ -2,9 +2,9 @@ import type { ProgramsByTag } from '@/types';
 
 /**
  * 태그별 결과 화면 프로그램 카드.
- * ⚠️ '안내' 카드는 아직 실제 사례 텍스트를 못 받아서 기존 요약 문구를 heading으로만 옮겨둔 상태.
- *    fieldVisits의 image는 전부 null(자리표시)이라, 실제 사진 파일을 받으면 그 URL로 교체하면 됨.
- *    link/fieldVisits[].link.url도 '#'인 곳은 실제 링크로 교체하면 됨.
+ * ⚠️ '안내' 카드는 아직 실제 사례 텍스트를 못 받아서 기존 요약 문구를 heading으로만 옮겨둔 상태
+ *    (대표사진은 반영됨). 생태미식캠프 카드도 대표사진만 있고 세부 bullets/fieldVisits는 아직 없음.
+ *    link/fieldVisits[].link.url이 '#'인 곳은 실제 링크로 교체하면 됨.
  */
 export const programsByTag: ProgramsByTag = {
   인식: [
@@ -37,7 +37,7 @@ export const programsByTag: ProgramsByTag = {
   실천: [
     {
       icon: '🍳',
-      image: null,
+      image: '/practice-hero.jpg',
       title: '제철 식탁 실천 클래스 (가제)',
       desc: '식재료와 조리법을 직접 다뤄보며 나의 식사 습관과 태도를 돌아보는 프로그램이에요.',
       link: '#',
@@ -55,11 +55,11 @@ export const programsByTag: ProgramsByTag = {
       fieldVisits: [
         {
           text: "[서울청년센터] 제철 식사 교육 - '조립식 레시피'를 통해 나의 환경과 입맛에 맞게 만들어갑니다.",
-          image: null,
+          image: '/seoulyouth.jpg',
         },
         {
           text: '[마르쉐 농부시장X벗밭] 지구농부들의 제철 꾸러미를 나누고 함께 요리해 먹는 계절 모임입니다.',
-          image: null,
+          image: '/marche.jpg',
           link: { text: '"퇴근후마르쉐는, 이미 존재하던 연결을 알아차리게 해줘요" 윤 님과의 대화 : 벗밭의 벗과 함께 나눈 이야기들', url: '#' },
         },
       ],
@@ -68,7 +68,7 @@ export const programsByTag: ProgramsByTag = {
   확장: [
     {
       icon: '🚜',
-      image: null,
+      image: '/expand-hero.jpg',
       title: '농가방문',
       desc: '제철 먹거리를 직접 기르는 농부님을 찾아가 생산 현장을 눈으로 확인하고, 재배 과정과 이야기를 직접 듣는 프로그램이에요.',
       link: '#',
@@ -79,12 +79,13 @@ export const programsByTag: ProgramsByTag = {
         },
         {
           text: '[샐러드연맹X벗밭] 냉이마트 — 당신이 먹는 냉이는 마트에서 자라는 게 아니에요! 마트에서는 보이지 않는 풍경을 직접 만나고 바로 캔 냉이를 함께 맛보는 시간! 다양한 식물들의 이름도 살펴보아요.',
+          image: '/naengi-mart.jpg',
         },
       ],
     },
     {
       icon: '🏕️',
-      image: null,
+      image: '/ecocamp-hero.jpg',
       title: '생태미식캠프, 생태미식여행학교',
       desc: '지역의 자연과 먹거리, 사람을 며칠간 깊이 만나는 캠프형 프로그램이에요.',
       link: '#',
@@ -100,6 +101,7 @@ export const programsByTag: ProgramsByTag = {
       fieldVisits: [
         {
           text: "[서강대X벗밭] <환대의 식탁>, <혼디드렁> 다양한 지역에서 내가 딛고 있는 땅과 이웃과 더불어 살아가는 사람들을 만나 이야기하고, '나는 어떻게 살고 싶은가?'에 관해 이야기합니다.",
+          image: '/sogang-pbl.jpg',
           link: { text: '관련 콘텐츠', url: 'https://youtu.be/ouC9Aksn3cM?si=ip9L-WBma8b73zC_' },
         },
       ],
@@ -108,7 +110,7 @@ export const programsByTag: ProgramsByTag = {
   안내: [
     {
       icon: '🧑‍🏫',
-      image: null,
+      image: '/guide-hero.jpg',
       title: '식문화 교육 퍼실리테이터 과정 (가제)',
       desc: '좋은 식경험을 직접 기획하고 진행할 수 있도록 교육·활동 설계 방법을 안내하는 프로그램이에요.',
       link: '#',
