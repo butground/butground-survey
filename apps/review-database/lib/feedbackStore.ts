@@ -5,8 +5,22 @@ const LIST_KEY = 'butground:feedback-entries';
 // 같은 서버리스 인스턴스에서 재사용하도록 모듈 스코프에 캐시(콜드 스타트마다 재연결하는 걸 방지)
 let client: import('ioredis').Redis | null = null;
 
+/**
+ * Vercel Storage에서 Redis(Upstash)를 만들어 프로젝트에 연결하면 REDIS_URL 대신
+ * KV_URL / REDIS_CONNECTION_STRING 같은 이름으로 자동 주입되는 경우가 있어서,
+ * 흔히 쓰이는 이름들을 순서대로 확인한다.
+ */
+function resolveRedisUrl(): string | undefined {
+  return (
+    process.env.REDIS_URL ||
+    process.env.KV_URL ||
+    process.env.REDIS_CONNECTION_STRING ||
+    undefined
+  );
+}
+
 async function getClient() {
-  const url = process.env.REDIS_URL;
+  const url = resolveRedisUrl();
   if (!url) return null;
   if (!client) {
     const { default: Redis } = await import('ioredis');
@@ -45,7 +59,7 @@ export function parseFeedbackBlocks(raw: string): { name: string; content: strin
 export async function appendFeedbackBatch(date: string, rawText: string): Promise<FeedbackEntry[]> {
   const redis = await getClient();
   if (!redis) {
-    throw new Error('REDIS_URL 환경변수가 설정되어 있지 않아요.');
+    throw new Error('Redis 연결 정보(REDIS_URL 등)가 설정되어 있지 않아요. Vercel Storage에서 Redis를 만들어 이 프로젝트에 연결해주세요.');
   }
 
   const blocks = parseFeedbackBlocks(rawText);
@@ -80,7 +94,7 @@ export async function appendFeedbackBatch(date: string, rawText: string): Promis
 export async function listFeedbackEntries(): Promise<FeedbackEntry[]> {
   const redis = await getClient();
   if (!redis) {
-    throw new Error('REDIS_URL 환경변수가 설정되어 있지 않아요.');
+    throw new Error('Redis 연결 정보(REDIS_URL 등)가 설정되어 있지 않아요. Vercel Storage에서 Redis를 만들어 이 프로젝트에 연결해주세요.');
   }
   const raw = await redis.lrange(LIST_KEY, 0, -1);
   return raw
